@@ -33,4 +33,27 @@ app.directive('ngFileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-app.controller("mainController", function($scope){});
+app.controller("mainController", function($scope){
+
+$scope.items = [];
+$scope.grandAmountArray = [];
+
+$scope.getSum = function(total, num) {
+    return total + num;
+  }
+
+
+$scope.try = function(){
+    console.log($scope.items);
+    console.log($scope.grandAmount);
+};
+
+$scope.deleteImage = function(imageIndex){
+
+    $scope.files.splice(imageIndex, 1); $scope.grandAmountArray.splice(imageIndex, 1)
+
+
+
+}
+
+});
