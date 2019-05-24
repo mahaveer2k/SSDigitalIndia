@@ -73,16 +73,22 @@
                     <div class="col-md-3">
 
                         <p class="text-muted">Size (inche) :</p>
-
+ 
                         <select id="mySelect" ng-model="items[$index].size" class="form-control"
                             style="font-size: small;color: #d87715;" ng-disabled="!files.length">
                             <option value disabled>Select</option>
-                            <option value="03.00">3.5 x 5"</option>
-                            <option value="06.00">4 x 6"</option>
-                            <option value="08.00">5 x 7"</option>
-                            <option value="10.00">6 x 8"</option>
-                            <option value="15.00">8 x 10"</option>
-                            <option value="20.00">8 x 12"</option>
+                            <optgroup label="Passport Size">
+                                    <option value="32">Passport</option>
+                                    
+                            </optgroup>
+                            <optgroup label="Standard Size">
+                                <option value="03.00">3.5 x 5"</option>
+                                <option value="06.00">4 x 6"</option>
+                                <option value="08.00">5 x 7"</option>
+                                <option value="10.00">6 x 8"</option>
+                                <option value="15.00">8 x 10"</option>
+                                <option value="20.00">8 x 12"</option>
+                            </optgroup>
                             <option value="25.00">10 x 12"</option>
                             <option value="30.00">12 x 15"</option>
                             <option value="35.00">12 x 18"</option>
@@ -99,7 +105,7 @@
                     <div class="col-md-3">
 
                         <p class="text-muted">Quantity :</p>
-                        <select id="qtyn" class="form-control" ng-model="items[$index].quantity"
+                        <select id="qtyn" class="form-control" ng-model="items[$index].quantity" ng-if="items[$index].size != 32"
                             style="font-size: small;color: #d87715;" ng-disabled="!files.length">
                             <option value disabled>Qty</option>
                             <option value="1">1</option>
@@ -113,6 +119,13 @@
                             <option value="8">8</option>
                             <option value="9">9</option>
                             <option value="10">10</option>
+                        </select>
+
+                        <select id="qtyn" class="form-control" ng-model="items[$index].quantity"  ng-if="items[$index].size == 32"
+                            style="font-size: small;color: #d87715;" ng-disabled="!files.length">
+                            <option value disabled>Qty</option>
+                            <option value="1">32</option>
+                            
                         </select>
 
                     </div>
