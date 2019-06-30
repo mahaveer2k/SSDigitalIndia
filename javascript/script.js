@@ -33,7 +33,7 @@ app.directive('ngFileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-app.controller("mainController", function($scope){
+app.controller("mainController", function($scope, $http){
 
 $scope.items = [];
 $scope.grandAmountArray = [];
@@ -51,9 +51,33 @@ $scope.try = function(){
 $scope.deleteImage = function(imageIndex){
 
     $scope.files.splice(imageIndex, 1); $scope.grandAmountArray.splice(imageIndex, 1)
+};
+
+$scope.upload = function(){
+
+    var uploadForm = new FormData();
+
+    uploadForm.append('support_images[]', $scope.files[0]);
+
+    $http.post('photo_upload.php', uploadForm, {
+        transformRequest:angular.identity, 
+        headers: {'Content-Type':undefined, 'Process-Data': false}
+    }).then(function(response){
+        console.log(response);
+        // if(response.error){
+        //     $scope.error = true;
+        //     $scope.errorMessage = response.message;
+        // }
+        // else{
+        //     $scope.success = true;
+        //     $scope.successMessage = response.message;
+        //     $scope.fetch();
+        // }
+    })
 
 
 
-}
+};
+
 
 });
