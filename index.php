@@ -185,11 +185,11 @@ function getCallbackUrl()
     </div>
     <hr>
     <br>
-    <div class="container">
+    <div class="container bg-white">
 
 
 
-        <div class="row">
+        <div class="row ">
             <div class="col-12 col-sm-4">
                 <p id="qdemo" class="p-2 h4 align-middle text-success" ng-if="grandAmountArray.reduce(getSum)"
                     style="font-family: DejaVu Sans;">
@@ -200,7 +200,7 @@ function getCallbackUrl()
     </div>
 
     <hr>
-    <div class="text-center align-items-center">
+    <div class="text-center align-items-center bg-white">
         <p>
             <button id="porder" class="btn btn-success font-weight-bold" data-toggle="modal"
                 data-target="#registerModal" ng-disabled=" !grandAmountArray.length || !files.length">Place
@@ -275,13 +275,13 @@ function getCallbackUrl()
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button>
+                    <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
+                    <button type="button" class="btn btn-primary" ng-click="upload()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <footer class="text-white text-center fixed-bottom">
+    <footer class="text-white text-center footer navbar-fixed-bottom z--1000">
         <div class="container">
             <div class="h6">
                 <!-- <div> Quick Links </div> -->
