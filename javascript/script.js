@@ -38,6 +38,29 @@ app.controller("mainController", function($scope, $http){
 $scope.items = [];
 $scope.grandAmountArray = [];
 
+var rates = {
+
+    "03.00" :"",
+    "06.00" : "",
+    "08.00" : "",
+    "10.00" : "",
+    "15.00" : "",
+    "20.00" : "",
+    "25.00" : "",
+    "30.00" : "",
+    "35.00" : "",
+    "40.00" : "",
+    "50.00" : "",
+    "60.00" : "",
+    "80.00" : "",
+    "150.00" : "",
+    "180.00" : "",
+    "200.00" : "",
+    "32" : "passport"
+
+
+};
+
 $scope.getSum = function(total, num) {
     return total + num;
   }
@@ -57,22 +80,28 @@ $scope.upload = function(){
 
     var uploadForm = new FormData();
 
-    uploadForm.append('support_images[]', $scope.files[0]);
+    console.log("$scope.items = ",$scope.items);
 
+    uploadForm.append('support_images[]', $scope.files[0]._file);
+    uploadForm.append('submit', "submit");
+
+    return;
     $http.post('photo_upload.php', uploadForm, {
+        withCredentials: true,
         transformRequest:angular.identity, 
-        headers: {'Content-Type':undefined, 'Process-Data': false}
+        headers: {'Content-Type':undefined, 'Process-Data': false},
+        uploadEventHandlers: {
+            progress: function(e){
+                if (e.lengthComputable) {
+                    var progressBar = (e.loaded / e.total) * 100;
+                    console.log(progressBar);
+                    //here you will get progress, you can use this to show progress
+                }
+            }
+        }
     }).then(function(response){
         console.log(response);
-        // if(response.error){
-        //     $scope.error = true;
-        //     $scope.errorMessage = response.message;
-        // }
-        // else{
-        //     $scope.success = true;
-        //     $scope.successMessage = response.message;
-        //     $scope.fetch();
-        // }
+        
     })
 
 
