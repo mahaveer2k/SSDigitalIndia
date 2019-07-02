@@ -33,7 +33,7 @@ app.directive('ngFileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-app.controller("mainController", function($scope){
+app.controller("mainController", function($scope, $http){
 
 $scope.items = [];
 $scope.grandAmountArray = [];
@@ -53,6 +53,34 @@ $scope.deleteImage = function(imageIndex){
     $scope.files.splice(imageIndex, 1); $scope.grandAmountArray.splice(imageIndex, 1)
 
 
+
+}
+
+$scope.uploadTest = function(){
+    console.log($scope.files);
+
+    var formdata = new FormData();
+    formdata.append("fileToUpload", $scope.files);
+
+    $http({
+        method : "POST",
+        url : "/imageUpload.php",
+        headers: {
+            'Content-Type': undefined
+        },
+        params: {
+            formdata
+          },
+        data:{
+            formdata
+        },
+        transformRequest: angular.identity,
+        withCredentials : false,
+    }).
+    then(function(result) {
+        console.log(result);
+      
+    });
 
 }
 

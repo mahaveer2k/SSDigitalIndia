@@ -1,11 +1,37 @@
-﻿<html ng-app="ssApp">
+﻿<?php
+
+if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
+	//Request hash
+	$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';	
+	if(strcasecmp($contentType, 'application/json') == 0){
+		$data = json_decode(file_get_contents('php://input'));
+		// $hash=hash('sha512', $data->key.'|'.$data->txnid.'|'.$data->amount.'|'.$data->pinfo.'|'.$data->fname.'|'.$data->email.'|||||'.$data->udf5.'||||||'.$data->salt);
+		$hash=hash('sha512', $data->key.'|'.$data->txnid.'|'.$data->amount.'|'.$data->pinfo.'|'.$data->fname.'|'.$data->email.'|||||'.$data->udf5.'||||||'.$data->salt);
+		$json=array();
+		$json['success'] = $hash;
+    	echo json_encode($json);
+	
+	}
+	exit(0);
+}
+
+function getCallbackUrl()
+{
+	$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+	return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . 'response.php';
+}
+
+
+?>
+
+<html ng-app="ssApp">
 
 <head>
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="theme-color" content="#118496" />
-
+   
     <link rel="stylesheet" href="stylesheets//bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -16,6 +42,15 @@
 
     <link rel="stylesheet" href="stylesheets/style.css">
     <script src="javascript/script.js" type="text/javascript"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+    <!-- BOLT Sandbox/test //-->
+    <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
+    color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
+    <!-- BOLT Production/Live //-->
+    <!--// script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script //-->
+
+
     <style>
         img#logo {
             width: 20%;
@@ -165,13 +200,13 @@
     </div>
 
     <hr>
-    <div class="text-center align-items-center">service.html
+    <div class="text-center align-items-center">
         <p>
-
             <button id="porder" class="btn btn-success font-weight-bold" data-toggle="modal"
                 data-target="#registerModal" ng-disabled=" !grandAmountArray.length || !files.length">Place
                 Order</button>
         </p>
+        <button ng-click="uploadTest()"> Upload</button>
     </div>
 
 
@@ -188,18 +223,32 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <form action="">
+                        <form action="" id="payment_form">
+                            <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
+                            <input type="hidden" id="surl" name="surl" value="<?php echo getCallbackUrl(); ?>" />
+                            <input type="hidden" id="key" name="key" placeholder="Merchant Key" value="aJMIEQV4" />
+                            <input type="hidden" id="salt" name="salt" placeholder="Merchant Salt" value="6ShWIUoEIp" />
+
+                            <?php
+                                $txnid = "SSDIN" . round(microtime(true) * 1000);
+                            ?>
+
+                            <input type="hidden" id="txnid" name="txnid" placeholder="Transaction ID" value="<?php echo  $txnid;?>" />
+                            <input type="hidden" id="amount" name="amount" placeholder="Amount" ng-value="grandAmountArray.reduce(getSum)" readonly />
+                            <input type="hidden" id="pinfo" name="pinfo" placeholder="Product Info" value="P01,P02" />
+
+
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" />
+                                <label for="name">First Name</label>
+                                <input type="text" id="fname" name="fname" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="mobile">Mobile No.</label>
-                                <input type="text" id="mobile" class="form-control" />
+                                <input type="text"  id="mobile" name="mobile" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" id="email" class="form-control" />
+                                <input type="text" id="email" name="email" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>
@@ -209,7 +258,7 @@
                                 <label for="city">City</label>
                                 <input type="text" id="city" class="form-control" />
                             </div>
-
+                    
                             <div class="form-group">
                                 <label for="pin">Pin Code</label>
                                 <input type="text" id="pin" class="form-control" />
@@ -219,14 +268,14 @@
                                 <label for="country">Country</label>
                                 <input readonly type="text" id="country" value="India" class="form-control" />
                             </div>
-
+                            <input type="hidden" id="hash" name="hash" placeholder="Hash" value="" />
                         </form>
 
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button>
                 </div>
             </div>
         </div>
@@ -261,7 +310,84 @@
         </div>
     </footer>
 
+    <script type="text/javascript"><!--
+        $('#payment_form').bind('keyup blur', function(){
+            
+            $.ajax({
+                url: 'index.php',
+                type: 'post',
+                data: JSON.stringify({ 
+                    key: $('#key').val(),
+                    salt: $('#salt').val(),
+                    txnid: $('#txnid').val(),
+                    amount: $('#amount').val(),
+                    pinfo: $('#pinfo').val(),
+                    fname: $('#fname').val(),
+                    email: $('#email').val(),
+                    mobile: $('#mobile').val(),
+                    udf5: $('#udf5').val()
+                }),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(json) {
+                    if (json['error']) {
+                    $('#alertinfo').html('<i class="fa fa-info-circle"></i>'+json['error']);
+                    }
+                    else if (json['success']) {	
+                        $('#hash').val(json['success']);
+                    }
+                }
+                }); 
+        });
+//-->
+</script>
 
+<script type="text/javascript"><!--
+function launchBOLT()
+{
+	bolt.launch({
+	key: $('#key').val(),
+	txnid: $('#txnid').val(), 
+	hash: $('#hash').val(),
+	amount: $('#amount').val(),
+	firstname: $('#fname').val(),
+	email: $('#email').val(),
+	phone: $('#mobile').val(),
+	productinfo: $('#pinfo').val(),
+	udf5: $('#udf5').val(),
+	surl : $('#surl').val(),
+	furl: $('#surl').val(),
+	mode: 'dropout'	
+},{ responseHandler: function(BOLT){
+	console.log( BOLT.response.txnStatus );		
+	if(BOLT.response.txnStatus != 'CANCEL')
+	{
+		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
+		var fr = '<form action=\"'+$('#surl').val()+'\" method=\"post\">' +
+		'<input type=\"hidden\" name=\"key\" value=\"'+BOLT.response.key+'\" />' +
+		'<input type=\"hidden\" name=\"salt\" value=\"'+$('#salt').val()+'\" />' +
+		'<input type=\"hidden\" name=\"txnid\" value=\"'+BOLT.response.txnid+'\" />' +
+		'<input type=\"hidden\" name=\"amount\" value=\"'+BOLT.response.amount+'\" />' +
+		'<input type=\"hidden\" name=\"productinfo\" value=\"'+BOLT.response.productinfo+'\" />' +
+		'<input type=\"hidden\" name=\"firstname\" value=\"'+BOLT.response.firstname+'\" />' +
+		'<input type=\"hidden\" name=\"email\" value=\"'+BOLT.response.email+'\" />' +
+		'<input type=\"hidden\" name=\"udf5\" value=\"'+BOLT.response.udf5+'\" />' +
+		'<input type=\"hidden\" name=\"mihpayid\" value=\"'+BOLT.response.mihpayid+'\" />' +
+		'<input type=\"hidden\" name=\"status\" value=\"'+BOLT.response.status+'\" />' +
+		'<input type=\"hidden\" name=\"hash\" value=\"'+BOLT.response.hash+'\" />' +
+		'</form>';
+		var form = jQuery(fr);
+		jQuery('body').append(form);								
+		form.submit();
+	}
+},
+	catchException: function(BOLT){
+ 		alert( BOLT.message );
+	}
+});
+}
+//--
+</script>	
 </body>
 
 </html>
