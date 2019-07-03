@@ -33,7 +33,7 @@ app.directive('ngFileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-app.controller("mainController", function($scope, $http){
+app.controller("mainController", function($scope, $http, $q){
 
 $scope.items = [];
 $scope.grandAmountArray = [];
@@ -82,10 +82,18 @@ $scope.upload = function(){
 
     console.log("$scope.items = ",$scope.items);
 
-    uploadForm.append('support_images[]', $scope.files[0]._file);
+    for(i =0;i < $scope.files.length;i++){
+        uploadForm.append('support_images['+i+']', $scope.files[i]._file);
+        uploadForm.append("data["+i+"]", JSON.stringify($scope.items[i]));
+        console.log($scope.items[i]);
+    }
+    
+
     uploadForm.append('submit', "submit");
 
-    return;
+
+    // return;
+    $scope.showProgress = true;
     $http.post('photo_upload.php', uploadForm, {
         withCredentials: true,
         transformRequest:angular.identity, 
@@ -94,6 +102,7 @@ $scope.upload = function(){
             progress: function(e){
                 if (e.lengthComputable) {
                     var progressBar = (e.loaded / e.total) * 100;
+                    $scope.progressNow= Math.round(progressBar);
                     console.log(progressBar);
                     //here you will get progress, you can use this to show progress
                 }
@@ -102,6 +111,9 @@ $scope.upload = function(){
     }).then(function(response){
         console.log(response);
         
+    }, function(err){
+        alert("error occur!!");
+        $scope.showProgress = false;
     })
 
 

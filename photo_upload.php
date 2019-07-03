@@ -38,8 +38,9 @@ $rates = '{
 
   if(isset($_POST['submit']))           
 {
- extract($_POST);
-
+  $stringData = json_decode($_POST["data"][0], true);
+  echo $stringData["price"]." <br>";
+  // echo  extract($_POST);
     if(isset($_FILES['support_images']['name']))
     {
         $file_name_all="";
@@ -62,7 +63,8 @@ $rates = '{
                    }
              }
               $filepath = rtrim($file_name_all, '*').$path;   
-              echo "Filepath = ".$filepath; 
+                 
+              // echo "Filepath = ".$filepath; 
         //  $query=mysqli_query($con,"INSERT into propertyimages (`propertyimage`) VALUES('".addslashes($filepath)."'); ");
         }
 
