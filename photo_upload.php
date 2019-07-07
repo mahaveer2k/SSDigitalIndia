@@ -9,6 +9,17 @@
 //     // in case of "overflow" (PHP converts it to a double)
 //     return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
 //   }
+// Include the Simple ORM class
+include 'SimpleOrm.class.php';
+
+// Connect to the database using mysqli
+$conn = new mysqli('localhost', 'akshay', 'akshay@123');
+
+if ($conn->connect_error)
+  die(sprintf('Unable to connect to the database. %s', $conn->connect_error));
+
+// Tell Simple ORM to use the connection you just created.
+SimpleOrm::useConnection($conn, 'ssdigitalindia');
 
 $rates = '{
 
@@ -49,17 +60,20 @@ $rates = '{
                $tmpFilePath = $_FILES['support_images']['tmp_name'][$i];    
                if ($tmpFilePath != "")
                {    
-                   $path = "uploads/"; // create folder 
-                   $name = $_FILES['support_images']['name'][$i];
+                  $path = "uploads/"; // create folder 
+                  $name = $_FILES['support_images']['name'][$i];
+                  // echo "<br> basename = ".basename($_FILES['support_images']['name'][$i])." <br>";
                   $size = $_FILES['support_images']['size'][$i];
-
-                   list($txt, $ext) = explode(".", $name);
-                   $file= time().substr(str_replace(" ", "_", $txt), 0);
-                   $info = pathinfo($file);
-                   $filename = $file.".".$ext;
+                  $stringData = json_decode($_POST["data"][$i], true);
+                
+                   $filename= time().basename($_FILES['support_images']['name'][$i]);                   
                    if(move_uploaded_file($_FILES['support_images']['tmp_name'][$i], $path.$filename)) 
                    { 
                       $file_name_all.=$filename."*";
+                      echo "</br> $path"."$filename </br>";
+                      echo json_encode($stringData, JSON_PRETTY_PRINT) ."<br>";
+
+                      
                    }
              }
               $filepath = rtrim($file_name_all, '*').$path;   
@@ -80,7 +94,11 @@ $rates = '{
     //    header("Location: admin_profile.php");
     // }
 }else{
-  echo "Failed 1";
+  header('Location: '."/");
 }
 
+class Order extends SimpleOrm { 
+
+
+}
  ?>

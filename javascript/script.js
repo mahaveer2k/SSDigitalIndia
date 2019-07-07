@@ -110,7 +110,7 @@ $scope.upload = function(){
         }
     }).then(function(response){
         console.log(response);
-        
+        $scope.showProgress = false;
     }, function(err){
         alert("error occur!!");
         $scope.showProgress = false;
@@ -119,34 +119,4 @@ $scope.upload = function(){
 
 
 };
-
-
-$scope.uploadTest = function(){
-    console.log($scope.files);
-
-    var formdata = new FormData();
-    formdata.append("fileToUpload", $scope.files);
-
-    $http({
-        method : "POST",
-        url : "/imageUpload.php",
-        headers: {
-            'Content-Type': undefined
-        },
-        params: {
-            formdata
-          },
-        data:{
-            formdata
-        },
-        transformRequest: angular.identity,
-        withCredentials : false,
-    }).
-    then(function(result) {
-        console.log(result);
-      
-    });
-
-}
-
 });
