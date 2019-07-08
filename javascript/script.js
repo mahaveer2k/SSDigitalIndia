@@ -76,7 +76,20 @@ $scope.deleteImage = function(imageIndex){
     $scope.files.splice(imageIndex, 1); $scope.grandAmountArray.splice(imageIndex, 1)
 };
 
+function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
 $scope.upload = function(){
+
+    $('#registerModal').modal('toggle')
 
     var uploadForm = new FormData();
 
@@ -88,7 +101,8 @@ $scope.upload = function(){
         console.log($scope.items[i]);
     }
     
-
+    console.log("getFormData($('#payment_form')) = ",getFormData($('#payment_form')));
+    uploadForm.append("customer", JSON.stringify(getFormData($('#payment_form'))));
     uploadForm.append('submit', "submit");
 
 
@@ -111,6 +125,7 @@ $scope.upload = function(){
     }).then(function(response){
         console.log(response);
         $scope.showProgress = false;
+        launchBOLT();
     }, function(err){
         alert("error occur!!");
         $scope.showProgress = false;

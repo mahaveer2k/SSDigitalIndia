@@ -1,25 +1,54 @@
-
-
- <?php
-// function millitime() {
-//     $microtime = microtime();
-//     $comps = explode(' ', $microtime);
+<?php
+function millitime() {
+    $microtime = microtime();
+    $comps = explode(' ', $microtime);
   
-//     // Note: Using a string here to prevent loss of precision
-//     // in case of "overflow" (PHP converts it to a double)
-//     return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
-//   }
-// Include the Simple ORM class
-include 'SimpleOrm.class.php';
+    // Note: Using a string here to prevent loss of precision
+    // in case of "overflow" (PHP converts it to a double)
+    return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
+  }
 
 // Connect to the database using mysqli
-$conn = new mysqli('localhost', 'akshay', 'akshay@123');
+require("./connection.php");
 
-if ($conn->connect_error)
-  die(sprintf('Unable to connect to the database. %s', $conn->connect_error));
+class Orders{ 
 
-// Tell Simple ORM to use the connection you just created.
-SimpleOrm::useConnection($conn, 'ssdigitalindia');
+  var $size;
+  var $quantity;
+  var $amount;
+  var $orderID;
+  var $first_name;
+  var $mobile;
+  var $email;
+  var $address;
+  var $city;
+  var $pin_code;
+  var $country;
+  var $c;
+
+  function __construct($c){
+    $this->c = $c;
+  }
+
+  function save(){
+    $s = $this->size;
+    $q = $this->quantity;
+    $a = $this->amount;
+    $o = $this->orderID;
+    $f = $this->first_name;
+    $m = $this->mobile;
+    $e = $this->email;
+    $add = $this->address;
+    $ci = $this->city;
+    $p = $this->pin_code;
+    $country = $this->country;
+
+    $stmt = $this->c->prepare('INSERT INTO orders (size, quantity, amount, order_id, first_name, mobile, email, address, city, pin_code, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->bind_param("sssssssssss", $s, $q, $a, $o, $f, $m, $e, $add, $ci, $p, $country);
+    $stmt->execute();
+
+  }
+}
 
 $rates = '{
 
@@ -49,11 +78,13 @@ $rates = '{
 
   if(isset($_POST['submit']))           
 {
-  $stringData = json_decode($_POST["data"][0], true);
-  echo $stringData["price"]." <br>";
+ 
   // echo  extract($_POST);
     if(isset($_FILES['support_images']['name']))
     {
+        $customer = json_decode($_POST["customer"], true);
+        // error_log($customer);
+        
         $file_name_all="";
         for($i=0; $i<count($_FILES['support_images']['name']); $i++) 
         {
@@ -66,9 +97,25 @@ $rates = '{
                   $size = $_FILES['support_images']['size'][$i];
                   $stringData = json_decode($_POST["data"][$i], true);
                 
-                   $filename= time().basename($_FILES['support_images']['name'][$i]);                   
+                   $filename= time()."_".basename($_FILES['support_images']['name'][$i]);                   
                    if(move_uploaded_file($_FILES['support_images']['tmp_name'][$i], $path.$filename)) 
                    { 
+                      error_log(var_export($customer, true), 4);
+                      error_log(var_export($stringData, true), 4);
+                      $orders = new Orders($conn);
+                      $orders->size = $stringData["size"];
+                      $orders->quantity = $stringData["quantity"];
+                      $orders->amount = $stringData["price"];
+                      $orders->orderID = $customer["txnid"];
+                      $orders->first_name = $customer["fname"];
+                      $orders->mobile = $customer["mobile"];
+                      $orders->email = $customer["email"];
+                      $orders->address = $customer["address"];
+                      $orders->city = $customer["city"];
+                      $orders->pin_code = $customer["pin_code"];
+                      $orders->country = $customer["country"];
+                      $orders->save();
+
                       $file_name_all.=$filename."*";
                       echo "</br> $path"."$filename </br>";
                       echo json_encode($stringData, JSON_PRETTY_PRINT) ."<br>";
@@ -82,11 +129,14 @@ $rates = '{
         //  $query=mysqli_query($con,"INSERT into propertyimages (`propertyimage`) VALUES('".addslashes($filepath)."'); ");
         }
 
+        http_response_code(200);
+
     }
     else
     {
         $filepath="";
-        echo "Failed";
+        echo "files not found!";
+        http_response_code(500);
     }
 
     // if($query)
@@ -97,8 +147,5 @@ $rates = '{
   header('Location: '."/");
 }
 
-class Order extends SimpleOrm { 
 
-
-}
  ?>

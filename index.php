@@ -1,5 +1,13 @@
 ﻿<?php
+function millitime()
+{
+    $microtime = microtime();
+    $comps = explode(' ', $microtime);
 
+    // Note: Using a string here to prevent loss of precision
+    // in case of "overflow" (PHP converts it to a double)
+    return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
+}
 if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
     //Request hash
     $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
@@ -45,8 +53,8 @@ function getCallbackUrl()
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- BOLT Sandbox/test //-->
-    <!-- <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
-    color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script> -->
+    <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
+    color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
     <!-- BOLT Production/Live //-->
     <!--// script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script //-->
 
@@ -211,9 +219,9 @@ function getCallbackUrl()
             </div>
         </div>
         <p ng-if="!showProgress">
-            <button id="porder" class="btn btn-success font-weight-bold" data-toggle1="modal"
+            <button id="porder" class="btn btn-success font-weight-bold" data-toggle="modal"
                 data-target="#registerModal" ng-disabled=" !grandAmountArray.length || !files.length"
-                ng-click="upload()">Place
+                n1g-click="upload()">Place
                 Order</button>
         </p>
         <!-- <button ng-click="uploadTest()"> Upload</button> -->
@@ -240,7 +248,7 @@ function getCallbackUrl()
                             <input type="hidden" id="salt" name="salt" placeholder="Merchant Salt" value="6ShWIUoEIp" />
 
                             <?php
-$txnid = "SSDIN" . round(microtime(true) * 1000);
+$txnid = "SSDIN-" . millitime();
 ?>
 
                             <input type="hidden" id="txnid" name="txnid" placeholder="Transaction ID"
@@ -264,21 +272,21 @@ $txnid = "SSDIN" . round(microtime(true) * 1000);
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <input type="text" id="address" class="form-control" />
+                                <input type="text" id="address" name="address" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <input type="text" id="city" class="form-control" />
+                                <input type="text" id="city" name="city" class="form-control" />
                             </div>
 
                             <div class="form-group">
                                 <label for="pin">Pin Code</label>
-                                <input type="text" id="pin" class="form-control" />
+                                <input type="text" id="pin" name="pin_code" class="form-control" />
                             </div>
 
                             <div class="form-group">
                                 <label for="country">Country</label>
-                                <input readonly type="text" id="country" value="India" class="form-control" />
+                                <input readonly type="text" id="country" name="country" value="India" class="form-control" />
                             </div>
                             <input type="hidden" id="hash" name="hash" placeholder="Hash" value="" />
                         </form>
@@ -374,7 +382,7 @@ $txnid = "SSDIN" . round(microtime(true) * 1000);
             responseHandler: function(BOLT) {
                 console.log(BOLT.response.txnStatus);
                 if (BOLT.response.txnStatus != 'CANCEL') {
-                    //Salt is passd here for demo purpose only. For practical use keep salt at server side only.
+
                     var fr = '<form action=\"' + $('#surl').val() + '\" method=\"post\">' +
                         '<input type=\"hidden\" name=\"key\" value=\"' + BOLT.response.key + '\" />' +
                         '<input type=\"hidden\" name=\"salt\" value=\"' + $('#salt').val() + '\" />' +
