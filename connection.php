@@ -2,7 +2,7 @@
 
 $SERVERNAME = "localhost";
 $USERNAME = "akshay";
-$PASSWORD = "akshay@123";
+$PASSWORD = "akshay@Ran";
 $DB_NAME= "ssdigitalindia";
 
 // Create connection

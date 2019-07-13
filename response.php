@@ -3,7 +3,7 @@ $postdata = $_POST;
 $msg = '';
 if (isset($postdata['key'])) {
     $key = $postdata['key'];
-    $salt = $postdata['salt'];
+    $salt = '6ShWIUoEIp';
     $txnid = $postdata['txnid'];
     $amount = $postdata['amount'];
     $productInfo = $postdata['productinfo'];
@@ -20,16 +20,35 @@ if (isset($postdata['key'])) {
     $reverseKeyString = implode("|", $reverseKeyArray);
     $CalcHashString = strtolower(hash('sha512', $salt . '|' . $status . '|' . $reverseKeyString));
 
+    error_log("salt = ".$salt);
     if ($status == 'success' && $resphash == $CalcHashString) {
-        $msg = "Transaction Successfull...";
+        require("./connection.php");
+        $msg = "Transaction Successfull";
         //Do success order processing here...
 
         // Connect to the database using mysqli
         require "./connection.php";
 
         $stmt = $conn->prepare('UPDATE orders SET payment_status=true WHERE order_id=?');
-        $stmt->bind_params("s", $txnid);
+        $stmt->bind_param("s", $txnid);
         $stmt->execute();
+
+        $message = '<html><body style="text-align:center;padding:20px;background:#ddd">';
+        $message .= '<h1 style="color:#ff6027;">Order Confirmed!</h1>';
+        $message .= '<p style="color:#01c701;font-size:18px;">Your order nubmer '.$txnid.' is confirmed!</p>';
+        $message .= '<p style="color:black;font-size:16px;">Contact us: +91 98189 54821</p>';
+        $message .= '</body></html>';
+
+        $headers = "From: info@ssdigitalindia.com\r\n";
+        
+
+       if(mail($email, "SSDigitalIndia- Order Confirm!",$message)){
+            mail("mahaveer_2k@yahoo.com", "SSDigitalIndia- New Order!","New order from $firstname ($email)");
+       }else{
+            error_log("\n\n Error in sending mail.");
+       }
+
+
 
     } else {
         //tampered or failed

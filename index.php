@@ -333,7 +333,7 @@ $txnid = "SSDIN-" . millitime();
     <script type="text/javascript">
     <!--
     $('#payment_form').bind('keyup blur', function() {
-
+        console.log("$('#salt').val() = ",$('#salt').val());
         $.ajax({
             url: 'index.php',
             type: 'post',
@@ -385,7 +385,7 @@ $txnid = "SSDIN-" . millitime();
 
                     var fr = '<form action=\"' + $('#surl').val() + '\" method=\"post\">' +
                         '<input type=\"hidden\" name=\"key\" value=\"' + BOLT.response.key + '\" />' +
-                        '<input type=\"hidden\" name=\"salt\" value=\"' + $('#salt').val() + '\" />' +
+                        // '<input type=\"hidden\" name=\"salt\" value=\"' + $('#salt').val() + '\" />' +
                         '<input type=\"hidden\" name=\"txnid\" value=\"' + BOLT.response.txnid + '\" />' +
                         '<input type=\"hidden\" name=\"amount\" value=\"' + BOLT.response.amount + '\" />' +
                         '<input type=\"hidden\" name=\"productinfo\" value=\"' + BOLT.response.productinfo +
