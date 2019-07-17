@@ -21,7 +21,8 @@ if (isset($postdata['key'])) {
     $CalcHashString = strtolower(hash('sha512', $salt . '|' . $status . '|' . $reverseKeyString));
 
     if ($status == 'success' && $resphash == $CalcHashString) {
-        $msg = "Transaction Successfull...";
+        $msg = "Thank You!!";
+        $second_msg = "Your order is confirmed!!";
         //Do success order processing here...
 
         // Connect to the database using mysqli
@@ -34,12 +35,15 @@ if (isset($postdata['key'])) {
     } else {
         //tampered or failed
         $msg = "Payment failed!!";
+        $second_msg = "Your order is not confirmed!!";
     }
 
 } else {
-	header('Location: '."/");
+    header('Location: '."/");
 }
 // else exit(0);
+// $msg = "Thank You!!";
+// $second_msg = "Your order is confirmed!!";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -58,7 +62,7 @@ if (isset($postdata['key'])) {
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="stylesheets/style.css">
+    <!-- <link rel="stylesheet" href="stylesheets/style.css"> -->
     <script src="javascript/script.js" type="text/javascript"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -67,17 +71,7 @@ if (isset($postdata['key'])) {
 <title><?php echo $msg; ?></title>
 </head>
 <style type="text/css">
-	.main {
-		margin-left:30px;
-		font-family:Verdana, Geneva, sans-serif, serif;
-	}
-	.text {
-		float:left;
-		width:180px;
-	}
-	.dv {
-		margin-bottom:5px;
-	}
+
 	img#logo {
         width: 20%;
     }
@@ -104,12 +98,13 @@ if (isset($postdata['key'])) {
 
 
 
-<div class="main container p-3 mb-5 bg-light">
+<div class="container-fluid p-3 mb-5 bg-light">
 
-	<h1 class="text-center mb-5" >
+	<h1 class="text-center mb-2" >
 		<?php echo $msg; ?>
-	</h1>
-
+    </h1>
+    <h4 class="text-center mb-5"><?php echo $second_msg; ?></h4>
+<div class="container">
     <div class="dv">
     <span ><label>Your Order ID:</label></span>
     <span><?php echo $txnid; ?></span>
@@ -152,7 +147,13 @@ if (isset($postdata['key'])) {
     <span><?php echo $msg; ?></span>
     </div> -->
 </div>
+<hr>
+<div class="text-center">
+    <p>Having Trouble? <a href="/contact.html">Contact Us</a></p>
+    <button class="btn btn-primary btn-sm">Continue to homepage</button>
+</div>
 
+</div>
 <footer class="text-white text-center footer navbar-fixed-bottom z--1000">
         <div class="container">
             <div class="h6">
