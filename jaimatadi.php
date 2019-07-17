@@ -1,3 +1,17 @@
+<?php 
+session_start();
+
+if($_POST["uname"] == "Mahaveer" && $_POST["pass"]=="J3X(YUfz" && !$logedin){
+
+    $_SESSION["logedin"] = true;
+    header("Location: http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+    exit;
+}
+
+$logedin = $_SESSION["logedin"];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +30,14 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <link rel="stylesheet" href="stylesheets/style.css">
-    <script src="javascript/script.js" type="text/javascript"></script>
+    <!-- <script src="javascript/script.js" type="text/javascript"></script> -->
     <style>
-        /* html,
+        html,
         body {
-        height: 100%
-        } */
+        height: 100%;
+        overflow:hidden;
+        
+        }
         img#logo {
             width: 20%;
         }
@@ -42,6 +58,16 @@
 </head>
 <body style="background : #252222;">
 
+<?php
+    if($logedin){
+?>
+
+
+
+
+ <?php   }else{
+?>
+
 <div class="center-to-pg" >
   <div class="mx-auto align-middle" style="background:red">
     <div class="card">
@@ -49,14 +75,14 @@
             Login
         </div>
         <div class="card-body">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputEmail1">Username</label>
-                <input type="uname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username">
+                <input type="uname" name="uname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -85,8 +111,10 @@
 <script src="javascript/particles.min.js" ></script>
 <script>
 particlesJS.load('particles-js', 'javascript/particlesjs-config.json', function() {
-  console.log('callback - particles.js config loaded');
+  console.log('config loaded');
 });
 </script>
+
+<?php }?>
 </body>
 </html>
