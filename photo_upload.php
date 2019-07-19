@@ -25,6 +25,7 @@ class Orders{
   var $pin_code;
   var $country;
   var $c;
+  var $image_path;
 
   function __construct($c){
     $this->c = $c;
@@ -42,9 +43,10 @@ class Orders{
     $ci = $this->city;
     $p = $this->pin_code;
     $country = $this->country;
+    $i_path = $this->image_path;
 
-    $stmt = $this->c->prepare('INSERT INTO orders (size, quantity, amount, order_id, first_name, mobile, email, address, city, pin_code, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param("sssssssssss", $s, $q, $a, $o, $f, $m, $e, $add, $ci, $p, $country);
+    $stmt = $this->c->prepare('INSERT INTO orders (size, quantity, amount, order_id, first_name, mobile, email, address, city, pin_code, country, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->bind_param("sssssssssss", $s, $q, $a, $o, $f, $m, $e, $add, $ci, $p, $country, $i_path);
     $stmt->execute();
 
   }
@@ -114,6 +116,7 @@ $rates = '{
                       $orders->city = $customer["city"];
                       $orders->pin_code = $customer["pin_code"];
                       $orders->country = $customer["country"];
+                      $orders->image_path = $path.$filename;
                       $orders->save();
 
                       $file_name_all.=$filename."*";

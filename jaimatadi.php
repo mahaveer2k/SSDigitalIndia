@@ -60,12 +60,65 @@ $logedin = $_SESSION["logedin"];
 
 <?php
     if($logedin){
+        require("./connection.php");
+        $result = $conn->query("SELECT * FROM orders");
+
+        ?>
+<div class="container-fluid">
+    <h1 class="text-white text-center my-2">Orders</h1>
+       <table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      
+      <th scope="col">Order ID</th>
+      <th scope="col">Size</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Amount</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">City</th>
+      <th scope="col">Pin Code</th>
+      <th scope="col">Payment Status</th>
+      <th scope="col">Image Path</th>
+    </tr>
+  </thead>
+  <tbody> 
+
+<?php         
+        while($row = $result->fetch_assoc()){
 ?>
 
 
+    <tr>
+      
+      <td><?php echo $row["order_id"];  ?></td>
+      <td><?php echo $row["size"];  ?></td>
+      <td><?php echo $row["quantity"];  ?></td>
+      <td><?php echo $row["amount"];  ?></td>
+      <td><?php echo $row["first_name"];  ?></td>
+      <td><?php echo $row["mobile"];  ?></td>
+      <td><?php echo $row["email"];  ?></td>
+      <td><?php echo $row["address"];  ?></td>
+      <td><?php echo $row["city"];  ?></td>
+      <td><?php echo $row["pin_code"];  ?></td>
+      <td><?php echo $row["payment_status"] ?  "Success" : "Failed";  ?></td>
+      <td><a target="_black" href='<?php echo $row["image_path"];  ?>'> <?php echo $row["image_path"];  ?> </a></td>
+      
+    </tr>
+   
+ <?php  
+    };
+
+    ?>
 
 
- <?php   }else{
+</tbody>
+    </table>
+    </div>
+<?php
+    }else{
 ?>
 
 <div class="center-to-pg" >
