@@ -46,7 +46,7 @@ class Orders{
     $i_path = $this->image_path;
 
     $stmt = $this->c->prepare('INSERT INTO orders (size, quantity, amount, order_id, first_name, mobile, email, address, city, pin_code, country, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param("sssssssssss", $s, $q, $a, $o, $f, $m, $e, $add, $ci, $p, $country, $i_path);
+    $stmt->bind_param("ssssssssssss", $s, $q, $a, $o, $f, $m, $e, $add, $ci, $p, $country, $i_path);
     $stmt->execute();
 
   }

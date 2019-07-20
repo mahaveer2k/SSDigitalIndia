@@ -242,7 +242,8 @@ function getCallbackUrl()
                 <div class="modal-body">
                     <div>
                         <form action="" id="payment_form">
-                            <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" />
+                            <input type="hidden" id="udf5" name="udf5" value=" " />
+                            <!-- <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" /> -->
                             <input type="hidden" id="surl" name="surl" value="<?php echo getCallbackUrl(); ?>" />
                             <input type="hidden" id="key" name="key" placeholder="Merchant Key" value="aJMIEQV4" />
                             <input type="hidden" id="salt" name="salt" placeholder="Merchant Salt" value="6ShWIUoEIp" />
