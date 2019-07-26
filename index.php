@@ -208,10 +208,11 @@ function getCallbackUrl()
 
 
         <div class="row ">
-            <div class="col-12 col-sm-4">
+            <div class="col-12 text-center">
                 <p id="qdemo" class="p-2 h4 align-middle text-success" ng-if="grandAmountArray.reduce(getSum)"
-                    style="font-family: DejaVu Sans;">
-                    Total Amount: Rs. {{grandAmountArray.reduce(getSum)}}</p>
+                    style="font-family: DejaVu Sans; font-size:20px">
+                    Payable Amount: <span style="color:#d87715;">Rs. {{grandAmountArray.reduce(getSum)}}</span>
+                </p>
             </div>
 
         </div>
@@ -222,7 +223,7 @@ function getCallbackUrl()
     <div class="text-center align-items-center bg-white">
         <div class="container" ng-if="showProgress">
             <div class="progress ">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="background:#64c68b"
                     aria-valuenow="{{progressNow}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressNow}}%">{{progressNow}}%</div>
             </div>
         </div>
