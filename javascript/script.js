@@ -108,6 +108,20 @@ $scope.upload = function(){
 
     // return;
     $scope.showProgress = true;
+
+    var res = Array.from(uploadForm.entries(), ([key, prop]) => (
+        {[key]: {
+          "ContentLength": 
+          typeof prop === "string" 
+          ? prop.length 
+          : prop.size
+        }
+      }));
+
+    console.log(res);
+
+
+
     $http.post('photo_upload.php', uploadForm, {
         withCredentials: true,
         transformRequest:angular.identity, 
@@ -129,6 +143,7 @@ $scope.upload = function(){
     }, function(err){
         alert("error occur!!");
         $scope.showProgress = false;
+        console.log("err", err);
     })
 
 

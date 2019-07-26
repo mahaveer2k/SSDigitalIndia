@@ -223,7 +223,7 @@ function getCallbackUrl()
     <div class="text-center align-items-center bg-white">
         <div class="container" ng-if="showProgress">
             <div class="progress ">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="background:#64c68b"
+                <div class="progress-bar progress-bar-striped progress-bar-animated  bg-success" role="progressbar" 
                     aria-valuenow="{{progressNow}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressNow}}%">{{progressNow}}%</div>
             </div>
         </div>
