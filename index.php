@@ -297,7 +297,7 @@ $txnid = "SSDIN-" . millitime();
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
-                    <button type="button" class="btn btn-primary" ng-click="upload()">Save changes</button>
+                    <button type="button" class="btn btn-primary" ng-click="upload()">Place Order</button>
                 </div>
             </div>
         </div>
