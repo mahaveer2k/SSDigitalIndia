@@ -1,4 +1,6 @@
 ﻿<?php
+$test = true;
+
 function millitime()
 {
     $microtime = microtime();
@@ -54,12 +56,16 @@ function getCallbackUrl()
     <link href="images/favicon.png"  rel="icon" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- BOLT Sandbox/test //-->
-    <!-- <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
-    color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script> -->
-    <!-- BOLT Production/Live //-->
-    <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
 
+    <?php  if($test){ ?>
+        <!-- BOLT Sandbox/test //-->
+        <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script> 
+    <?php }else{
+    ?>
+        <!-- BOLT Production/Live //-->
+        <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
+
+    <?php }?>
 
     <style>
     img#logo {
