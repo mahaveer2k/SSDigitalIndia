@@ -57,10 +57,10 @@ function getCallbackUrl()
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <?php  if($test){ ?>
+    <?php if ($test) {?>
         <!-- BOLT Sandbox/test //-->
-        <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script> 
-    <?php }else{
+        <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
+    <?php } else {
     ?>
         <!-- BOLT Production/Live //-->
         <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="images/SS_Digital_India_logo.png"></script>
@@ -68,17 +68,31 @@ function getCallbackUrl()
     <?php }?>
 
     <style>
-    img#logo {
-        width: 20%;
-    }
-
-    @media only screen and (max-width: 768px) {
         img#logo {
-            width: 80%;
+            width: 20%;
         }
 
-    }
+        .theme-orange{
+            color:#d87715;
+        }
+        .theme-green{
+            color:#28a745;
+        }
+
+        @media only screen and (max-width: 768px) {
+            img#logo {
+                width: 80%;
+            }
+
+        }
     </style>
+
+<!-- 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/20221/d3-jetpack.js"></script>
+        <script src="javascript/clock.js"></script>
+        <link rel="stylesheet" href="stylesheets/clock.css"> -->
+
 </head>
 
 <body ng-controller="mainController">
@@ -92,6 +106,14 @@ function getCallbackUrl()
             </h2>
         </a>
     </nav>
+<!-- 
+        <div class="float-right-1">
+            <div class="polar-gantt">
+                <div id="target" ></div>
+            </div>
+
+        </div> -->
+
     <!-- <h1>Mahaveer Prasad Meena </h1> -->
     <div class="container p-5 mb-5 bg-light    ">
         <label class="btn btn-primary shadow-sm " style="background: #d87715; border-color:#d87715;">
@@ -165,7 +187,6 @@ function getCallbackUrl()
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
-                            <option value="5">5</option>
                             <option value="6">6</option>
                             <option value="7">7</option>
                             <option value="8">8</option>
@@ -223,7 +244,7 @@ function getCallbackUrl()
     <div class="text-center align-items-center bg-white">
         <div class="container" ng-if="showProgress">
             <div class="progress ">
-                <div class="progress-bar progress-bar-striped progress-bar-animated  bg-success" role="progressbar" 
+                <div class="progress-bar progress-bar-striped progress-bar-animated  bg-success" role="progressbar"
                     aria-valuenow="{{progressNow}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressNow}}%">{{progressNow}}%</div>
             </div>
         </div>
@@ -242,15 +263,19 @@ function getCallbackUrl()
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Order Now</h5>
+                <div class="modal-header text-center" style="display: block; border-bottom:0;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    <img src="images/SS_Digital_India_logo.png" alt="SS Digital India logo" class="img-fluid text-center" style=" width: 50%;">
+                    <hr>
+                    <div class="h6 modal-title font-weight-bold" id="registerModalLabel" > <span class="" >Order</span> <span class=""> Now</span></div>
+
                 </div>
                 <div class="modal-body">
                     <div>
                         <form action="" id="payment_form">
+
                             <input type="hidden" id="udf5" name="udf5" value=" " />
                             <!-- <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" /> -->
                             <input type="hidden" id="surl" name="surl" value="<?php echo getCallbackUrl(); ?>" />
@@ -258,8 +283,8 @@ function getCallbackUrl()
                             <input type="hidden" id="salt" name="salt" placeholder="Merchant Salt" value="6ShWIUoEIp" />
 
                             <?php
-$txnid = "SSDIN-" . millitime();
-?>
+                                $txnid = "SSDIN-" . millitime();
+                            ?>
 
                             <input type="hidden" id="txnid" name="txnid" placeholder="Transaction ID"
                                 value="<?php echo $txnid; ?>" />
@@ -267,47 +292,81 @@ $txnid = "SSDIN-" . millitime();
                                 ng-value="grandAmountArray.reduce(getSum)" readonly />
                             <input type="hidden" id="pinfo" name="pinfo" placeholder="Product Info" value="P01,P02" />
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-sm-3">Name</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="fname" name="fname" class="form-control form-control-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group row">
+                                        <label for="mobile" class="col-sm-3" >Mobile No.</label>
+                                        <div class="col-sm-6">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text ">+91</div>
+                                                </div>
+                                                    <input type="text" id="mobile" name="mobile" class="form-control" />
+                                            </div>
+                                        </div>
 
-                            <div class="form-group">
-                                <label for="name">First Name</label>
-                                <input type="text" id="fname" name="fname" class="form-control" />
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="mobile">Mobile No.</label>
-                                <input type="text" id="mobile" name="mobile" class="form-control" />
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3">Email</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="username@example.com"/>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" id="email" name="email" class="form-control" />
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-3">Address</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="address" name="address" class="form-control form-control-sm " />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" id="address" name="address" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" id="city" name="city" class="form-control" />
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-3">City</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="city" name="city" class="form-control form-control-sm" />
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="pin">Pin Code</label>
-                                <input type="text" id="pin" name="pin_code" class="form-control" />
+                            <div class="form-group row">
+                                <label for="pin" class="col-sm-3">Pin Code</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="pin" name="pin_code" class="form-control form-control-sm" />
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="country">Country</label>
-                                <input readonly type="text" id="country" name="country" value="India" class="form-control" />
+                            <div class="form-group row">
+                                <label for="country" class="col-sm-3">Country</label>
+                                <div class="col-sm-6">
+                                    <input readonly type="text" id="country" name="country" value="India" class="form-control form-control-sm" />
+                                </div>
                             </div>
                             <input type="hidden" id="hash" name="hash" placeholder="Hash" value="" />
                         </form>
 
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <div class="justify-content-center modal-footer text-center">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick='$("#payment_form").trigger("reset");'>Reset</button>
                     <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
-                    <button type="button" class="btn btn-primary" ng-click="upload()">Place Order</button>
+                    <button type="button" class="btn btn-primary btn-sm font-weight-bold" ng-click="upload()">Order Now</button>
                 </div>
+
+
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!- - <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -- >
+                    <button type="button" class="btn btn-primary" ng-click="upload()">Place Order</button>
+                </div> -->
             </div>
         </div>
     </div>
