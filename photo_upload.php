@@ -148,6 +148,8 @@ $rates = '{
     // }
 }else{
   echo "No value found!";
+  http_response_code(500);
+
 }
 
 
