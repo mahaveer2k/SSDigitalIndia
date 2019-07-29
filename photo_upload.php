@@ -147,7 +147,7 @@ $rates = '{
     //    header("Location: admin_profile.php");
     // }
 }else{
-  header('Location: '."/");
+  echo "No value found!";
 }
 
 
