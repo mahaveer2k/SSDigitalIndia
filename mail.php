@@ -70,7 +70,7 @@ $html = '<div style="padding: 20px; background:#F3F3F3"><p style="text-align: ce
 
    while($row= $result->fetch_assoc()){
 
-      $html .=   '<tr><td style="text-align: left;">'.$row["size"].' </td><td style="text-align: left;">'.$row["quantity"].' </td><td style="text-align: left;"> '.$rateJson[$row["size"]].'</td> <td style="text-align: left;">'.(int)$rateJson[$row["size"]] * (int)$row["quantity"].' </td></tr>';
+      $html .=   '<tr><td style="text-align: left;">'.$rateJson[$row["size"]] .' </td><td style="text-align: left;">'.$row["quantity"].' </td><td style="text-align: left;"> '.$rateJson[$row["size"]].'</td> <td style="text-align: left;">'.(int)$row["size"] * (int)$row["quantity"].' </td></tr>';
       
    }
 
