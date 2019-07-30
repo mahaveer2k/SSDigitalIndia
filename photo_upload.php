@@ -93,7 +93,7 @@ $rates = '{
         {
                $tmpFilePath = $_FILES['support_images']['tmp_name'][$i];    
                if ($tmpFilePath != "")
-               {    
+               {
                   $path = "uploads/"; // create folder 
                   $name = $_FILES['support_images']['name'][$i];
                   // echo "<br> basename = ".basename($_FILES['support_images']['name'][$i])." <br>";
