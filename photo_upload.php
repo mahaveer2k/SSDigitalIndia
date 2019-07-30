@@ -86,6 +86,7 @@ $rates = '{
     {
         $customer = json_decode($_POST["customer"], true);
         // error_log($customer);
+        $ratesJson = json_decode( $rates, true );
         
         $file_name_all="";
         for($i=0; $i<count($_FILES['support_images']['name']); $i++) 
@@ -105,7 +106,7 @@ $rates = '{
                       error_log(var_export($customer, true), 4);
                       error_log(var_export($stringData, true), 4);
                       $orders = new Orders($conn);
-                      $orders->size = $stringData["size"];
+                      $orders->size = $ratesJson[$stringData["size"]];
                       $orders->quantity = $stringData["quantity"];
                       $orders->amount = $stringData["price"];
                       $orders->orderID = $customer["txnid"];

@@ -35,21 +35,12 @@ if (isset($postdata['key'])) {
         $stmt->bind_param("s", $txnid);
         $stmt->execute();
 
-        $message = '<html><body style="text-align:center;padding:20px;background:#ddd">';
-        $message .= '<h1 style="color:#ff6027;">Order Confirmed!</h1>';
-        $message .= '<p style="color:#01c701;font-size:18px;">Your order nubmer '.$txnid.' is confirmed!</p>';
-        $message .= '<p style="color:black;font-size:16px;">Contact us: +91 98189 54821</p>';
-        $message .= '</body></html>';
+        require("./mail.php");
 
-        $headers = "From: info@ssdigitalindia.com\r\n";
+        sendInvoice($txnid);
         
 
-       if(mail($email, "SSDigitalIndia- Order Confirm!",$message)){
-            mail("mahaveer_2k@yahoo.com", "SSDigitalIndia- New Order!","New order from $firstname ($email)");
-       }else{
-            error_log("\n\n Error in sending mail.");
-       }
-
+       
 
 
     } else {
