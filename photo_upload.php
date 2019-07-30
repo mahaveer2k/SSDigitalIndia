@@ -106,7 +106,7 @@ $rates = '{
                       error_log(var_export($customer, true), 4);
                       error_log(var_export($stringData, true), 4);
                       $orders = new Orders($conn);
-                      $orders->size = $ratesJson[$stringData["size"]];
+                      $orders->size = $stringData["size"];
                       $orders->quantity = $stringData["quantity"];
                       $orders->amount = $stringData["price"];
                       $orders->orderID = $customer["txnid"];
