@@ -86,7 +86,7 @@ $rates = '{
     {
         $customer = json_decode($_POST["customer"], true);
         // error_log($customer);
-        $ratesJson = json_decode( $rates, true );
+        // $ratesJson = json_decode( $rates, true );
         
         $file_name_all="";
         for($i=0; $i<count($_FILES['support_images']['name']); $i++) 
