@@ -61,6 +61,112 @@ var rates = {
 
 };
 
+$scope.states = [
+    {
+        "state": "Arunachal Pradesh"
+    },
+    {
+        "state": "Assam"
+    },
+    {
+        "state": "Bihar"
+    },
+    {
+        "state": "Chandigarh"
+    },
+    {
+        "state": "Chhattisgarh"
+    },
+    {
+        "state": "Dadra Nagar Haveli"
+    },
+    {
+        "state": "Daman Diu"
+    },
+    {
+        "state": "Delhi"
+    },
+    {
+        "state": "Goa"
+    },
+    {
+        "state": "Gujarat"
+    },
+    {
+        "state": "Haryana"
+    },
+    {
+        "state": "Himachal Pradesh"
+    },
+    {
+        "state": "Jammu Kashmir"
+    },
+    {
+        "state": "Jharkhand"
+    },
+    {
+        "state": "Karnataka"
+    },
+    {
+        "state": "Kerala"
+    },
+    {
+        "state": "Lakshadweep"
+    },
+    {
+        "state": "Madhya Pradesh"
+    },
+    {
+        "state": "Maharashtra"
+    },
+    {
+        "state": "Manipur"
+    },
+    {
+        "state": "Meghalaya"
+    },
+    {
+        "state": "Mizoram"
+    },
+    {
+        "state": "Nagaland"
+    },
+    {
+        "state": "Odisha"
+    },
+    {
+        "state": "Puducherry"
+    },
+    {
+        "state": "Punjab"
+    },
+    {
+        "state": "Rajasthan"
+    },
+    {
+        "state": "Sikkim"
+    },
+    {
+        "state": "Tamil Nadu"
+    },
+    {
+        "state": "Telangana"
+    },
+    {
+        "state": "Tripura"
+    },
+    {
+        "state": "Uttar Pradesh"
+    },
+    {
+        "state": "Uttarakhand"
+    },
+    {
+        "state": "West Bengal"
+    }
+]
+
+
 $scope.getSum = function(total, num) {
     return total + num;
   }

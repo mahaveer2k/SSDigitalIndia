@@ -297,7 +297,7 @@ function getCallbackUrl()
                                     <div class="form-group row">
                                         <label for="name" class="col-sm-3">Name</label>
                                         <div class="col-sm-6">
-                                            <input type="text" id="fname" name="fname" class="form-control form-control-sm" />
+                                            <input type="text" id="fname" name="fname" class="form-control form-control-sm"  required/>
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +309,7 @@ function getCallbackUrl()
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text ">+91</div>
                                                 </div>
-                                                    <input type="text" id="mobile" name="mobile" class="form-control" />
+                                                    <input type="text" id="mobile" name="mobile" class="form-control" required />
                                             </div>
                                         </div>
 
@@ -320,26 +320,36 @@ function getCallbackUrl()
                             <div class="form-group row">
                                 <label for="email" class="col-sm-3">Email</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="username@example.com"/>
+                                    <input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="username@example.com"  required/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="address" class="col-sm-3">Address</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="address" name="address" class="form-control form-control-sm " />
+                                    <input type="text" id="address" name="address" class="form-control form-control-sm "  required/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="city" class="col-sm-3">City</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="city" name="city" class="form-control form-control-sm" />
+                                    <input type="text" id="city" name="city" class="form-control form-control-sm"  required />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-3">State</label>
+                                <div class="col-sm-6">
+                                    <select name="sate" id="state" class="custom-select-sm custom-select" required>
+                                        <option value disabled selected>-- select state --</option>
+                                        <option ng-repeat="state in states"  value="{{state.state}}" >{{state.state}}</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="pin" class="col-sm-3">Pin Code</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="pin" name="pin_code" class="form-control form-control-sm" />
+                                    <input type="text" id="pin" name="pin_code" class="form-control form-control-sm"  required/>
                                 </div>
                             </div>
 
