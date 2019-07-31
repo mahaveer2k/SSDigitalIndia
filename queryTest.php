@@ -2,7 +2,10 @@
 
 require "./connection.php";
 
-$stmt = $conn->prepare('SELECT * FROM orders');
+
+$orderIDMail = "SSDIN-1564550999956";
+$stmt = $conn->prepare('SELECT * FROM orders WHERE order_id=?' );
+$stmt->bind_param("s", $orderIDMail);
 
 $stmt->execute();
 $result = $stmt->get_result();

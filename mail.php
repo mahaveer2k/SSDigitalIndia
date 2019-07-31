@@ -14,7 +14,7 @@ require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
 
-function sendInvoice($orderID){
+function sendInvoice($orderIDMail){
   
    
 $rates = '{
@@ -42,9 +42,7 @@ $rates = '{
 
  $rateJson = json_decode( $rates, true );
 
- $emailID = null;
- $firstname = "";
- $tabelData = "";
+echo "orderIDMail is $orderIDMail <br>";
 
 $mail = new PHPMailer(); // create a new object
 $mail->IsSMTP(); // enable SMTP
@@ -64,11 +62,13 @@ $mail->Subject = "INVOICE- SSDigitalIndia Order Comfirmed!";
 require "./connection.php";
 
 $stmt = $conn->prepare('SELECT * FROM  orders WHERE order_id=?');
-$stmt->bind_param("s", $orderID);
+$stmt->bind_param("s", $orderIDMail);
 $stmt->execute();
 
 $result = $stmt->get_result();
-
+$emailID = null;
+$firstname = "";
+$tabelData = "";
 while($row= $result->fetch_assoc()){
 
 
@@ -94,7 +94,7 @@ echo "email id = ".$emailID;
 $mail->AddAddress($emailID);
 
 if(!empty($emailID)){
-  echo "email is not empty = $emailID";
+  echo "<br/> email is not empty = $emailID <br/>";
  if(!$mail->Send()) {
    //  echo "Mailer Error: " . $mail->ErrorInfo;
  } else {
