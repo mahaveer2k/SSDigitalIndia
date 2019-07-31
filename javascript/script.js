@@ -126,7 +126,7 @@ $scope.upload = function(){
         withCredentials: true,
         transformRequest:angular.identity, 
         headers: {'Content-Type':undefined, 'Process-Data': false},
-        timeout:5000,
+        timeout:300000,
         uploadEventHandlers: {
             progress: function(e){
                 if (e.lengthComputable) {
