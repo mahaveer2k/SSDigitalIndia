@@ -38,11 +38,12 @@ $rates = '{
   echo $ratesJson["35.00"];
 
 
-
+$email = null;
 
 
 while($row= $result->fetch_assoc()){
     
+  $email = $row["email"];
     // print_r($row);
     echo $row["id"]. " " .$row["size"]. " " .$row["quantity"]. " " . $row["amount"] . " " 
     . $row["order_id"]. " " . $row["created_at"]. " " . $row["first_name"]. " " . $row["mobile"]. " "  . $row["email"]. " " 
@@ -51,5 +52,7 @@ while($row= $result->fetch_assoc()){
     echo "<br>";
     echo "<br>";
 }
+echo "emai is $email";
+
 
 ?> 

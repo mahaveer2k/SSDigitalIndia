@@ -93,12 +93,17 @@ $mail->AltBody = "Thanks You for choosing SS Digital India. Your order id is";
 echo "email id = ".$emailID;
 $mail->AddAddress($emailID);
 
+if(!empty($emailID)){
+  echo "email is not empty = $emailID";
  if(!$mail->Send()) {
    //  echo "Mailer Error: " . $mail->ErrorInfo;
  } else {
    //  echo "Message has been sent";
  }
-
+}else{
+  echo "email is empty = $emailID ";
+  echo "<br> firstname is $firstname";
+}
 }
 
 
