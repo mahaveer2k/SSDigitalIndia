@@ -90,6 +90,7 @@ $html .= '</tbody></table></div>';
 
 $mail->msgHTML($html);
 $mail->AltBody = "Thanks You for choosing SS Digital India. Your order id is";
+echo "email id = ".$emailID;
 $mail->AddAddress($emailID);
 
  if(!$mail->Send()) {
