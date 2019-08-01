@@ -1,5 +1,5 @@
 <?php
-set_time_limit(500);
+set_time_limit(5000);
 
 function millitime() {
     $microtime = microtime();
