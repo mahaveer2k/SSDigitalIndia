@@ -272,9 +272,10 @@ function getCallbackUrl()
                     <div class="h6 modal-title font-weight-bold" id="registerModalLabel" > <span class="" >Order</span> <span class=""> Now</span></div>
 
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <form action="" id="payment_form">
+                <form action="" id="payment_form" ng-submit="upload($event)">
+                    <div class="modal-body">
+                        <div>
+                            
 
                             <input type="hidden" id="udf5" name="udf5" value=" " />
                             <!-- <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_PHP7" /> -->
@@ -339,7 +340,7 @@ function getCallbackUrl()
                             <div class="form-group row">
                                 <label for="city" class="col-sm-3">State</label>
                                 <div class="col-sm-6">
-                                    <select name="sate" id="state" class="custom-select-sm custom-select" required>
+                                    <select name="state" id="state" class="custom-select-sm custom-select" required>
                                         <option value disabled selected>-- select state --</option>
                                         <option ng-repeat="state in states"  value="{{state.state}}" >{{state.state}}</option>
                                     </select>
@@ -360,16 +361,17 @@ function getCallbackUrl()
                                 </div>
                             </div>
                             <input type="hidden" id="hash" name="hash" placeholder="Hash" value="" />
-                        </form>
+                            
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="justify-content-center modal-footer text-center">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick='$("#payment_form").trigger("reset");'>Reset</button>
-                    <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
-                    <button type="submit" class="btn btn-primary btn-sm font-weight-bold" ng-click="upload()">Order Now</button>
-                </div>
+                    <div class="justify-content-center modal-footer text-center">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick='$("#payment_form").trigger("reset");'>Reset</button>
+                        <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
+                        <button type="submit" class="btn btn-primary btn-sm font-weight-bold">Order Now</button>
+                    </div>
+                </form>
 
 
                 <!-- <div class="modal-footer">

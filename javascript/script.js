@@ -193,7 +193,9 @@ function getFormData($form){
     return indexed_array;
 }
 
-$scope.upload = function(){
+$scope.upload = function(e){
+
+    e.preventDefault();
 
     $('#registerModal').modal('toggle')
 
