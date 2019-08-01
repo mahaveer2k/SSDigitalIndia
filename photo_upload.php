@@ -1,4 +1,6 @@
 <?php
+set_time_limit(500);
+
 function millitime() {
     $microtime = microtime();
     $comps = explode(' ', $microtime);

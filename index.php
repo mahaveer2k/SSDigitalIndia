@@ -368,7 +368,7 @@ function getCallbackUrl()
                 <div class="justify-content-center modal-footer text-center">
                     <button type="button" class="btn btn-secondary btn-sm" onclick='$("#payment_form").trigger("reset");'>Reset</button>
                     <!-- <button type="submit" class="btn btn-primary" onclick="launchBOLT(); return false;" >Save changes</button> -->
-                    <button type="button" class="btn btn-primary btn-sm font-weight-bold" ng-click="upload()">Order Now</button>
+                    <button type="submit" class="btn btn-primary btn-sm font-weight-bold" ng-click="upload()">Order Now</button>
                 </div>
 
 
