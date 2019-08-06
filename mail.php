@@ -69,14 +69,42 @@ $result = $stmt->get_result();
 $emailID = null;
 $firstname = "";
 $tabelData = "";
+$orderDate = "";
+$city;
+$pin_code;
+$state;
+$country;
+
 while($row= $result->fetch_assoc()){
 
 
    $emailID = $row["email"];
    $firstname = $row["first_name"];
+   $orderDate = $row["created_at"];
 
    $tabelData =   '<tr><td style="text-align: left;">'.$rateJson[$row["size"]] .' </td><td style="text-align: left;">'.$row["quantity"].' </td><td style="text-align: left;"> '.$rateJson[$row["size"]].'</td> <td style="text-align: left;">'.(int)$row["size"] * (int)$row["quantity"].' </td></tr>';
    
+  $tabelData = <<<EOD
+
+
+
+  <tr style="border-collapse:collapse;"> 
+  <td style="padding:0;Margin:0;"> 
+   <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
+     <tr class="links" style="border-collapse:collapse;"> 
+      <td align="center" valign="top" width="25%" id="esd-menu-id-0" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;border:0;"> <a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:10px;text-decoration:none;display:block;color:#040404;">10x12"</a> </td> 
+      <td align="center" valign="top" width="25%" id="esd-menu-id-1" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;border:0;"> <a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:10px;text-decoration:none;display:block;color:#040404;">10</a> </td> 
+      <td align="center" valign="top" width="25%" id="esd-menu-id-2" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;border:0;"> <a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:10px;text-decoration:none;display:block;color:#040404;">&#8377;25</a> </td> 
+      <td align="center" valign="top" width="25%" style="Margin:0;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;border:0;"> <a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:10px;text-decoration:none;display:block;color:#040404;">&#8377;250</a> </td> 
+     </tr> 
+   </table> </td> 
+ </tr> 
+
+
+  EOD;
+
+
+
 }
 
 // $html = '<div style="padding: 20px; background:#F3F3F3"><p style="text-align: center; ">'.
@@ -113,7 +141,8 @@ while($row= $result->fetch_assoc()){
 $mail->AddEmbeddedImage("images/SS Digital.png", "header-image","header_image");
 $mail->AddEmbeddedImage("images/SS_Digital_India_logo.png", "footer-image","footer_image");
 
-$html= <<<EOD
+$html= 
+<<<EOD
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;">
  <head> 
@@ -193,7 +222,7 @@ a[x-apple-data-detectors] {
                   <td width="360" align="left" style="padding:0;Margin:0;"> 
                    <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
                      <tr style="border-collapse:collapse;"> 
-                      <td align="right" style="padding:0;Margin:0;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:15px;color:#333333;">Order Number: SSDIN-1564133937546</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:15px;color:#333333;">Order Date: 30 Dec, 2019</p> </td> 
+                      <td align="right" style="padding:0;Margin:0;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:15px;color:#333333;">Order Number: $orderIDMail</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:15px;color:#333333;">Order Date: $orderDate</p> </td> 
                      </tr> 
                    </table> </td> 
                  </tr> 
@@ -207,7 +236,7 @@ a[x-apple-data-detectors] {
                   <td width="560" valign="top" align="center" style="padding:0;Margin:0;"> 
                    <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
                      <tr style="border-collapse:collapse;"> 
-                      <td align="left" style="padding:0;Margin:0;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">Bill To:</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">Akshay Rana</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">121, Delhi</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">Delhi-&nbsp;110051</p> </td> 
+                      <td align="left" style="padding:0;Margin:0;"> <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">Bill To:</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">$firstname</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">$city, $pin_code</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;">$state&nbsp;$country</p> </td> 
                      </tr> 
                    </table> </td> 
                  </tr> 
@@ -246,6 +275,13 @@ a[x-apple-data-detectors] {
                          </tr> 
                        </table> </td> 
                      </tr> 
+
+
+EOD
+
+
+.<<<ZOD                     
+
                      <tr style="border-collapse:collapse;"> 
                       <td style="padding:0;Margin:0;"> 
                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
@@ -257,6 +293,10 @@ a[x-apple-data-detectors] {
                          </tr> 
                        </table> </td> 
                      </tr> 
+
+
+
+
                      <tr style="border-collapse:collapse;"> 
                       <td style="padding:0;Margin:0;"> 
                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
@@ -268,6 +308,9 @@ a[x-apple-data-detectors] {
                          </tr> 
                        </table> </td> 
                      </tr> 
+
+
+
                      <tr style="border-collapse:collapse;"> 
                       <td style="padding:0;Margin:0;"> 
                        <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
@@ -279,6 +322,9 @@ a[x-apple-data-detectors] {
                          </tr> 
                        </table> </td> 
                      </tr> 
+
+ZOD
+.<<<ZOD                     
                      <tr style="border-collapse:collapse;"> 
                       <td align="center" style="padding:0;Margin:0;padding-left:20px;padding-right:20px;"> 
                        <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;"> 
@@ -334,7 +380,7 @@ a[x-apple-data-detectors] {
   </div>  
  </body>
 </html>
-EOD;
+ZOD;
 
 
 $mail->msgHTML($html);
